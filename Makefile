@@ -1,4 +1,3 @@
-LOC := $(shell netstat -rn | awk '$$1 ~ /^(default|0.0.0.0)$$/ { print $$2 }' | awk -F. '{ print "0."$$3"."$$2"."$$1".in-addr.arpa." }' | xargs host -t txt | sed -n 's/.*LOC=\([A-Z]*\).*/\1/p')
 LOG   = 2>&1 | tee -a log.$(shell date +%Y.%m.%d_%H.%M.%S).$@
 DATE  = date | sed -n '/\(.*\)/ { h ; 's/./-/g' p ; x ; p ; x ; p }'
 
@@ -47,6 +46,9 @@ IAM := m2c-jenkins
 docker.build :
 	docker build --tag ${IAM} jenkins 
 
+
+docker.run.bash :
+	docker run -it --rm ${IAM} /bin/bash
 
 jenkins.run :
 	docker \
