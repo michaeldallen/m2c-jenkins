@@ -53,13 +53,10 @@ docker.run.bash :
 jenkins.run :
 	docker \
 		run \
-		--user root \
 		--rm \
-		--interactive \
-		--tty \
 		--publish 8080:8080 \
-		--volume /local/nv/volumes/jenkins_home/_data:/var/jenkins_home \
-		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--publish 50000:50000 \
+		--volume jenkins_home:/var/jenkins_home \
 		--name ${IAM} \
 		${IAM} \
 		 #
