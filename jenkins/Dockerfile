@@ -96,3 +96,15 @@ ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
 # from a derived Dockerfile, can use `RUN plugins.sh active.txt` to setup /usr/share/jenkins/ref/plugins from a support bundle
 #COPY plugins.sh /usr/local/bin/plugins.sh
 #COPY install-plugins.sh /usr/local/bin/install-plugins.sh
+
+USER root
+
+RUN mkdir -p /tmp/download && \
+  curl -L https://download.docker.com/linux/static/stable/x86_64/docker-18.03.1-ce.tgz | tar -xz -C /tmp/download && \
+  rm -rfv /tmp/download/docker/dockerd && \
+  mv -v /tmp/download/docker/docker* /usr/local/bin/ && \
+  rm -rfv /tmp/download && \
+  groupadd -g 999 docker && \
+  usermod -aG staff,docker jenkins
+
+USER ${user}
