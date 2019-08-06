@@ -13,6 +13,13 @@ RUN apt-get update \
   && rm -rfv /var/lib/apt/lists/*
 
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  \   
+  git\
+  \
+  cowsay
+  
+
 ARG user=jenkins
 ARG group=jenkins
 ARG uid=1000
