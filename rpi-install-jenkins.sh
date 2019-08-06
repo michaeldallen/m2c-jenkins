@@ -10,8 +10,8 @@ apt-get update
 apt-get -y install jenkins
 
 
-cat /var/lib/jenkins/secrets/initialAdminPassword
+#cat /var/lib/jenkins/secrets/initialAdminPassword
 
-journalctl -b -u jenkins
+#journalctl -b -u jenkins
 
 
