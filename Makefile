@@ -48,7 +48,13 @@ docker.build :
 
 
 docker.run.bash :
-	docker run -it --rm ${IAM} /bin/bash
+	docker \
+		run \
+		-it \
+		--rm \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
+		${IAM} \
+		/bin/bash
 
 jenkins.run :
 	docker \
