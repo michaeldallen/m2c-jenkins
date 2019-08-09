@@ -4,7 +4,8 @@ DATE  = date | sed -n '/\(.*\)/ { h ; 's/./-/g' p ; x ; p ; x ; p }'
 SHELL := /bin/bash
 
 
-
+# TODO: experimenting with overlay (vs. overlay2) for jenkins-in-docker-in-docker debugging - should move off overlay
+# https://github.com/docker/for-linux/issues/711
 
 .PHONY: make.vars make.targets make.clean make.default
 
