@@ -99,12 +99,11 @@ ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/jenkins.sh"]
 
 USER root
 
-RUN mkdir -p /tmp/download && \
-  curl -L https://download.docker.com/linux/static/stable/x86_64/docker-18.03.1-ce.tgz | tar -xz -C /tmp/download && \
-  rm -rfv /tmp/download/docker/dockerd && \
-  mv -v /tmp/download/docker/docker* /usr/local/bin/ && \
-  rm -rfv /tmp/download && \
-  groupadd -g 999 docker && \
-  usermod -aG staff,docker jenkins
+# RUN groupadd --gid 995 docker
+
+RUN curl -fsSL get.docker.com -o get-docker.sh && sh get-docker.sh
+
+RUN usermod --append --groups docker ${user}
 
 USER ${user}
+
