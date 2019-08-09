@@ -47,7 +47,7 @@ docker.build :
 	docker build --tag ${IAM} jenkins 
 
 
-docker.run.bash :
+docker.run.bash : docker.socket.usable
 	docker \
 		run \
 		-it \
@@ -56,7 +56,15 @@ docker.run.bash :
 		${IAM} \
 		/bin/bash
 
-jenkins.run :
+docker.socket.usable :
+	@echo checking docker socket usability
+	@[ `awk -F: '$$1 == "docker" {print $$3}' /etc/group` -eq 999 ] && echo "docker GID is 999" || \
+	 [ `stat --print=%a /var/run/docker.sock | cut -c3` -ge 6 ] && echo "docker socket is world read/writeable" || \
+	 { echo "docker socket unusable" ; /bin/false ; }
+
+
+
+jenkins.run : docker.socket.usable
 	docker \
 		run \
 		--rm \
