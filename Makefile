@@ -64,7 +64,7 @@ docker.socket.usable :
 
 
 
-jenkins.run : docker.socket.usable
+jenkins.run.local : docker.socket.usable
 	docker \
 		run \
 		--rm \
@@ -74,6 +74,18 @@ jenkins.run : docker.socket.usable
 		--volume /var/run/docker.sock:/var/run/docker.sock \
 		--name ${IAM} \
 		${IAM} \
+		 #
+
+jenkins.run.dockerhub : docker.socket.usable
+	docker \
+		run \
+		--rm \
+		--publish 8080:8080 \
+		--publish 50000:50000 \
+		--volume jenkins_home:/var/jenkins_home \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--name m2c-jenkins \
+		michaeldallen/m2c-jenkins \
 		 #
 
 jenkins.backup :
