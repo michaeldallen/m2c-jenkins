@@ -4,7 +4,8 @@ DATE  = date | sed -n '/\(.*\)/ { h ; 's/./-/g' p ; x ; p ; x ; p }'
 SHELL := /bin/bash
 
 
-
+# TODO: experimenting with overlay (vs. overlay2) for jenkins-in-docker-in-docker debugging - should move off overlay
+# https://github.com/docker/for-linux/issues/711
 
 .PHONY: make.vars make.targets make.clean make.default
 
@@ -47,18 +48,45 @@ docker.build :
 	docker build --tag ${IAM} jenkins 
 
 
-docker.run.bash :
-	docker run -it --rm ${IAM} /bin/bash
+docker.run.bash : docker.socket.usable
+	docker \
+		run \
+		-it \
+		--rm \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
+		${IAM} \
+		/bin/bash
 
-jenkins.run :
+docker.socket.usable :
+	@echo checking docker socket usability
+	@[ `awk -F: '$$1 == "docker" {print $$3}' /etc/group` -eq 999 ] && echo "docker GID is 999" || \
+	 [ `stat --print=%a /var/run/docker.sock | cut -c3` -ge 6 ] && echo "docker socket is world read/writeable" || \
+	 { echo "docker socket unusable" ; /bin/false ; }
+
+
+
+jenkins.run.local : docker.socket.usable
 	docker \
 		run \
 		--rm \
 		--publish 8080:8080 \
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
 		--name ${IAM} \
 		${IAM} \
+		 #
+
+jenkins.run.dockerhub : docker.socket.usable
+	docker \
+		run \
+		--rm \
+		--publish 8080:8080 \
+		--publish 50000:50000 \
+		--volume jenkins_home:/var/jenkins_home \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--name m2c-jenkins \
+		michaeldallen/m2c-jenkins \
 		 #
 
 jenkins.backup :
