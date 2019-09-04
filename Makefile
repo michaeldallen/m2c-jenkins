@@ -102,6 +102,12 @@ jenkins.run.dockerhub.daemon : docker.socket.usable
 		michaeldallen/m2c-jenkins \
 		 #
 
+jenkins.stop :
+	docker \
+		stop \
+		m2c-jenkins \
+		 #
+
 jenkins.backup :
 	sudo rsync -av --delete /local/nv/volumes/jenkins_home/ /local/nv/volumes/jenkins_home-$$(date +%Y.%m.%d_%H.%M.%S)/
 
