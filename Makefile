@@ -92,6 +92,9 @@ jenkins.run.local.daemon : docker.socket.usable
 
 jenkins.run.dockerhub : docker.socket.usable
 	docker \
+		pull \
+		michaeldallen/m2c-jenkins && \
+	docker \
 		run \
 		--rm \
 		--publish 8080:8080 \
@@ -103,6 +106,9 @@ jenkins.run.dockerhub : docker.socket.usable
 		 #
 
 jenkins.run.dockerhub.daemon : docker.socket.usable
+	docker \
+		pull \
+		michaeldallen/m2c-jenkins && \
 	docker \
 		run \
 		--detach \
