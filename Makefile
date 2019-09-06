@@ -121,6 +121,37 @@ jenkins.run.dockerhub.daemon : docker.socket.usable
 		michaeldallen/m2c-jenkins \
 		 #
 
+jenkins.run.dockerhub.multiarch : docker.socket.usable
+	docker \
+		pull \
+		michaeldallen/multiarch-m2c-jenkins && \
+	docker \
+		run \
+		--rm \
+		--publish 8080:8080 \
+		--publish 50000:50000 \
+		--volume jenkins_home:/var/jenkins_home \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--name m2c-jenkins \
+		michaeldallen/multiarch-m2c-jenkins \
+		 #
+
+jenkins.run.dockerhub.multiarch.daemon : docker.socket.usable
+	docker \
+		pull \
+		michaeldallen/multiarch-m2c-jenkins && \
+	docker \
+		run \
+		--detach \
+		--rm \
+		--publish 8080:8080 \
+		--publish 50000:50000 \
+		--volume jenkins_home:/var/jenkins_home \
+		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--name m2c-jenkins \
+		michaeldallen/multiarch-m2c-jenkins \
+		 #
+
 jenkins.stop :
 	docker \
 		stop \
