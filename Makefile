@@ -59,8 +59,8 @@ docker.run.bash : docker.socket.usable
 
 docker.socket.usable :
 	@echo checking docker socket usability
-	@[ `awk -F: '$$1 == "docker" {print $$3}' /etc/group` -eq 999 ] && echo "docker GID is 999" || \
-	 [ `stat --print=%a /var/run/docker.sock | cut -c3` -ge 6 ] && echo "docker socket is world read/writeable" || \
+	@{ [ `awk -F: '$$1 == "docker" {print $$3}' /etc/group` -eq 999 ] && echo "ok: docker GID is 999" ; } || \
+	 { [ `stat --print=%a /var/run/docker.sock | cut -c3` -ge 6 ] && echo "ok: docker socket is world read/writeable" ; } || \
 	 { echo "docker socket unusable" ; /bin/false ; }
 
 
