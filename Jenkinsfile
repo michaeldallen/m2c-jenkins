@@ -24,6 +24,7 @@ pipeline {
         }
         stage('publish') {
             steps {
+                sh 'docker tag m2c-jenkins-amd64 michaeldallen/m2c-jenkins-amd64'
                 withDockerRegistry([ credentialsId: "michaeldallen-at-dockerhub", url: "" ]) {
                     sh 'docker push michaeldallen/m2c-jenkins-amd64'
                 }
