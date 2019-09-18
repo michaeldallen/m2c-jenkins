@@ -14,7 +14,6 @@ pipeline {
                 sh 'pwd'
                 sh 'find . -name .git -prune -o -print'    
                 sh 'make'
-                sh 'env'
             }
         }
         
