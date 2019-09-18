@@ -7,5 +7,8 @@ pipeline {
                 sh 'find . -name .git -prune -o -print'
             }
         }
+        stage('build') {
+            sh 'make docker.build'
+        }
     }
 }
