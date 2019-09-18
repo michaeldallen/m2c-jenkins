@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
       registry = "michaeldallen/m2c-jenkins-amd64"
-      registryCredential = 'michaeldallen@dockerhub'
+      registryCredential = credentials("michaeldallen_at_dockerhub")
 
     }
     stages {
@@ -12,13 +12,13 @@ pipeline {
             steps {
                 sh 'id'
                 sh 'pwd'
-                sh 'find . -name .git -prune -o -print'        
+                sh 'find . -name .git -prune -o -print'    
+                sh 'make'
             }
         }
         
         stage('build') {
             steps {
-                sh 'make'
                 sh 'make docker.build'
             }
         }
