@@ -2,7 +2,11 @@ pipeline {
     agent { 
         dockerfile true
     }
+    environment {
+      registry = "michaeldallen/m2c-jenkins-amd64"
+      registryCredential = credentials('michaeldallen@dockerhub')
 
+    }
     stages {
         stage('sanity-check') {
             steps {
