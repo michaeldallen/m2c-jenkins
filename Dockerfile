@@ -1,5 +1,5 @@
 FROM ubuntu:bionic
 RUN apt-get update && apt-get -y dist-upgrade
-RUN apt-get install sudo make
+RUN apt-get install make
 
 
