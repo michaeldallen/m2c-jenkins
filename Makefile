@@ -42,7 +42,7 @@ make.clean.all :
 	| sort \
 	| xargs --max-lines=1 $(MAKE) 
 
-IAM := m2c-jenkins
+IAM := m2c-jenkins-amd64
 
 docker.build :
 	docker build --tag ${IAM} jenkins 
@@ -93,7 +93,7 @@ jenkins.run.local.daemon : docker.socket.usable
 jenkins.run.dockerhub : docker.socket.usable
 	docker \
 		pull \
-		michaeldallen/m2c-jenkins && \
+		michaeldallen/${IAM} && \
 	docker \
 		run \
 		--rm \
@@ -101,14 +101,14 @@ jenkins.run.dockerhub : docker.socket.usable
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
-		--name m2c-jenkins \
-		michaeldallen/m2c-jenkins \
+		--name ${IAM} \
+		michaeldallen/${IAM} \
 		 #
 
 jenkins.run.dockerhub.daemon : docker.socket.usable
 	docker \
 		pull \
-		michaeldallen/m2c-jenkins && \
+		michaeldallen/${IAM} && \
 	docker \
 		run \
 		--detach \
@@ -117,45 +117,21 @@ jenkins.run.dockerhub.daemon : docker.socket.usable
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
-		--name m2c-jenkins \
-		michaeldallen/m2c-jenkins \
+		--name ${IAM} \
+		michaeldallen/${IAM} \
+
+
+jenkins.logs :
+	docker \
+		logs -f \
+		${IAM} \
 		 #
 
-jenkins.run.dockerhub.multiarch : docker.socket.usable
-	docker \
-		pull \
-		michaeldallen/multiarch-m2c-jenkins && \
-	docker \
-		run \
-		--rm \
-		--publish 8080:8080 \
-		--publish 50000:50000 \
-		--volume jenkins_home:/var/jenkins_home \
-		--volume /var/run/docker.sock:/var/run/docker.sock \
-		--name m2c-jenkins \
-		michaeldallen/multiarch-m2c-jenkins \
-		 #
-
-jenkins.run.dockerhub.multiarch.daemon : docker.socket.usable
-	docker \
-		pull \
-		michaeldallen/multiarch-m2c-jenkins && \
-	docker \
-		run \
-		--detach \
-		--rm \
-		--publish 8080:8080 \
-		--publish 50000:50000 \
-		--volume jenkins_home:/var/jenkins_home \
-		--volume /var/run/docker.sock:/var/run/docker.sock \
-		--name m2c-jenkins \
-		michaeldallen/multiarch-m2c-jenkins \
-		 #
 
 jenkins.stop :
 	docker \
 		stop \
-		m2c-jenkins \
+		${IAM} \
 		 #
 
 jenkins.backup :
