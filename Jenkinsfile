@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'ubuntu:bionic' } }
+    agent { any }
     stages {
         stage('sanity-check') {
             steps {
