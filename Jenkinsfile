@@ -4,7 +4,7 @@ pipeline {
     }
     environment {
       registry = "michaeldallen/m2c-jenkins-amd64"
-      registryCredential = credentials('michaeldallen@dockerhub')
+      registryCredential = 'michaeldallen@dockerhub'
 
     }
     stages {
