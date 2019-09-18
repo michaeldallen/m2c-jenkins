@@ -4,7 +4,7 @@ pipeline {
         stage('sanity-check') {
             steps {
                 sh 'pwd'
-                sh 'find'
+                sh 'find . -name .git -prune -o -print'
             }
         }
     }
