@@ -15,6 +15,7 @@ pipeline {
         
         stage('build') {
             steps {
+                sh 'apt-get install -y make'
                 sh 'make docker.build'
             }
         }
