@@ -22,5 +22,12 @@ pipeline {
                 sh 'make docker.build'
             }
         }
+        stage('publish') {
+            steps {
+                withDockerRegistry([ credentialsId: "michaeldallen-at-dockerhub", url: "" ]) {
+                    sh 'docker push michaeldallen/m2c-jenkins-amd64'
+                }
+            }
+        }
     }
 }
