@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent { 
+        docker { 
+            image 'ubuntu:bionic'
+        }
+    }
+
     stages {
         stage('sanity-check') {
             steps {
@@ -7,6 +12,7 @@ pipeline {
                 sh 'find . -name .git -prune -o -print'
             }
         }
+        
         stage('build') {
             steps {
                 sh 'make docker.build'
