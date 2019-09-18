@@ -8,7 +8,9 @@ pipeline {
             }
         }
         stage('build') {
-            sh 'make docker.build'
+            steps {
+                sh 'make docker.build'
+            }
         }
     }
 }
