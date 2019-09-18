@@ -3,8 +3,8 @@ pipeline {
         dockerfile true
     }
     environment {
-      registry = "michaeldallen/m2c-jenkins-amd64"
-      registryCredential = credentials("michaeldallen-at-dockerhub")
+      REGISTRY = "michaeldallen/m2c-jenkins-amd64"
+      REGISTRYCREDENTIALS = credentials("michaeldallen-at-dockerhub")
 
     }
     stages {
@@ -14,6 +14,7 @@ pipeline {
                 sh 'pwd'
                 sh 'find . -name .git -prune -o -print'    
                 sh 'make'
+                sh 'env'
             }
         }
         
