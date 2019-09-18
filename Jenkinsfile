@@ -1,9 +1,20 @@
 pipeline {
-    agent { docker { image 'python:3.5.1' } }
+    agent { 
+        dockerfile true
+    }
+
     stages {
+        stage('sanity-check') {
+            steps {
+                sh 'id'
+                sh 'pwd'
+                sh 'find . -name .git -prune -o -print'        
+            }
+        }
+        
         stage('build') {
             steps {
-                sh 'python --version'
+                sh 'make'
             }
         }
     }
