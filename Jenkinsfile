@@ -3,7 +3,7 @@ pipeline {
         dockerfile true
     }
     environment {
-      REGISTRY = "michaeldallen/m2c-jenkins-amd64"
+      REGISTRY = "michaeldallen/m2c-jenkins-${DPKG_ARCH}"
       REGISTRYCREDENTIALS = credentials("michaeldallen-at-dockerhub")
 
       DPKG_ARCH = sh (returnStdout: true, script: 'dpkg --print-architecture').trim()
@@ -27,10 +27,10 @@ pipeline {
         }
         stage('publish') {
             steps {
-                sh 'docker tag m2c-jenkins-amd64 michaeldallen/m2c-jenkins-amd64'
-                sh 'echo docker tag m2c-jenkins-amd64 michaeldallen/m2c-jenkins-${DPKG_ARCH}'
+                sh 'docker tag m2c-jenkins-${DPKG_ARCH} michaeldallen/m2c-jenkins-${DPKG_ARCH}'
+                sh 'echo docker tag m2c-jenkins-${DPKG_ARCH} michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 withDockerRegistry([ credentialsId: "michaeldallen-at-dockerhub", url: "" ]) {
-                    sh 'docker push michaeldallen/m2c-jenkins-amd64'
+                    sh 'docker push michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 }
             }
         }
