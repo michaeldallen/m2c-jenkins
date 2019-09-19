@@ -3,6 +3,7 @@ DATE  = date | sed -n '/\(.*\)/ { h ; 's/./-/g' p ; x ; p ; x ; p }'
 
 SHELL := /bin/bash
 
+ARCH := $(shell dpkg --print-architecture)
 
 # TODO: experimenting with overlay (vs. overlay2) for jenkins-in-docker-in-docker debugging - should move off overlay
 # https://github.com/docker/for-linux/issues/711
@@ -42,7 +43,7 @@ make.clean.all :
 	| sort \
 	| xargs --max-lines=1 $(MAKE) 
 
-IAM := m2c-jenkins-amd64
+IAM := m2c-jenkins-${ARCH}
 
 docker.build :
 	docker build --tag ${IAM} jenkins 
