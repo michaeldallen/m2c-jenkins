@@ -6,12 +6,15 @@ pipeline {
       REGISTRY = "michaeldallen/m2c-jenkins-amd64"
       REGISTRYCREDENTIALS = credentials("michaeldallen-at-dockerhub")
 
+      AOEU= sh (returnStdout: true, script: 'echo aoeu').trim()
+      
     }
     stages {
         stage('sanity-check') {
             steps {
                 sh 'id'
                 sh 'pwd'
+                sh 'env | sort'
                 sh 'find . -name .git -prune -o -print'    
                 sh 'make'
             }
