@@ -6,7 +6,7 @@ pipeline {
       REGISTRY = "michaeldallen/m2c-jenkins-amd64"
       REGISTRYCREDENTIALS = credentials("michaeldallen-at-dockerhub")
 
-      AOEU= sh (returnStdout: true, script: 'echo aoeu').trim()
+      DPKG_ARCH = sh (returnStdout: true, script: 'dpkg --print-architecture').trim()
       
     }
     stages {
