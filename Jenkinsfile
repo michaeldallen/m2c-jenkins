@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                slackSend color: 'good', message: 'Message from Jenkins Pipeline'
+                slackSend color: 'good', message: "start: michaeldallen/m2c-jenkins-${DPKG_ARCH}"
             }
         }
         stage('sanity-check') {
@@ -41,10 +41,10 @@ pipeline {
     }
     post {
         success {
-            slackSend color: 'good', message: 'success michaeldallen/m2c-jenkins-${DPKG_ARCH}'
+            slackSend color: 'good', message: 'finish: success: michaeldallen/m2c-jenkins-${DPKG_ARCH}'
         }
         failure {
-            slackSend color: 'bad', message: 'failure: finished michaeldallen/m2c-jenkins-${DPKG_ARCH}'
+            slackSend color: 'bad', message: 'finish: failure: finished michaeldallen/m2c-jenkins-${DPKG_ARCH}'
         }
     }
 }
