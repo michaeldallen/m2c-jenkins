@@ -22,6 +22,7 @@ pipeline {
                 sh 'env | sort'
                 sh 'find . -name .git -prune -o -print'    
                 sh 'make'
+                sh 'false'
             }
         }
         
