@@ -13,7 +13,6 @@ pipeline {
         stage('init') {
             steps {
                 slackSend color: 'good', message: "start: michaeldallen/m2c-jenkins-${DPKG_ARCH}"
-                slackSend color: 'good', message: "test scm polling"
             }
         }
         stage('sanity-check') {
