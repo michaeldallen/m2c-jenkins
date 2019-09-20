@@ -10,6 +10,9 @@ pipeline {
       
     }
     stages {
+        stage('init') {
+            slackSend color: 'good', message: 'Message from Jenkins Pipeline'
+        }
         stage('sanity-check') {
             steps {
                 sh 'id'
