@@ -45,7 +45,7 @@ pipeline {
             slackSend color: 'good', message: "finish: success: michaeldallen/m2c-jenkins-${DPKG_ARCH}"
         }
         failure {
-            slackSend color: 'bad', message: "finish: failure: finished michaeldallen/m2c-jenkins-${DPKG_ARCH}"
+            slackSend color: 'danger', message: "finish: failure: finished michaeldallen/m2c-jenkins-${DPKG_ARCH}"
         }
     }
 }
