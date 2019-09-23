@@ -55,6 +55,7 @@ docker.run.bash : docker.socket.usable
 		-it \
 		--rm \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--hostname=`hostname --fqdn` \
 		${IAM} \
 		/bin/bash
 
@@ -74,6 +75,7 @@ jenkins.run.local : docker.socket.usable
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--hostname=`hostname --fqdn` \
 		--name ${IAM} \
 		${IAM} \
 		 #
@@ -87,6 +89,7 @@ jenkins.run.local.daemon : docker.socket.usable
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--hostname=`hostname --fqdn` \
 		--name ${IAM} \
 		${IAM} \
 		 #
@@ -102,6 +105,7 @@ jenkins.run.dockerhub : docker.socket.usable
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--hostname=`hostname --fqdn` \
 		--name ${IAM} \
 		michaeldallen/${IAM} \
 		 #
@@ -118,6 +122,7 @@ jenkins.run.dockerhub.daemon : docker.socket.usable
 		--publish 50000:50000 \
 		--volume jenkins_home:/var/jenkins_home \
 		--volume /var/run/docker.sock:/var/run/docker.sock \
+		--hostname=`hostname --fqdn` \
 		--name ${IAM} \
 		michaeldallen/${IAM} \
 
