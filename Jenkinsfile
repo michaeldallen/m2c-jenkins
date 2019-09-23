@@ -7,9 +7,16 @@ pipeline {
       REGISTRYCREDENTIALS = credentials("michaeldallen-at-dockerhub")
 
       DPKG_ARCH = sh (returnStdout: true, script: 'dpkg --print-architecture').trim()
-      
+      HOSTNAME = sh (returnStdout: true, script: 'hostname').trim()
+
     }
     stages {
+        stage('init') {
+            steps {
+                slackSend color: 'good', message: "start on ${HOSTNAME}: michaeldallen/m2c-jenkins-${DPKG_ARCH}"
+                
+            }
+        }
         stage('sanity-check') {
             steps {
                 sh 'id'
@@ -32,6 +39,14 @@ pipeline {
                     sh 'docker push michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 }
             }
+        }
+    }
+    post {
+        success {
+            slackSend color: 'good', message: "finish on ${HOSTNAME}: success: michaeldallen/m2c-jenkins-${DPKG_ARCH}"
+        }
+        failure {
+            slackSend color: 'danger', message: "finish on ${HOSTNAME}: failure: finished michaeldallen/m2c-jenkins-${DPKG_ARCH}"
         }
     }
 }
