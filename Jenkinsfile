@@ -43,10 +43,10 @@ pipeline {
     }
     post {
         success {
-            slackSend color: 'good', message: "finish on ${HOSTNAME}: success: ${JOB_NAME}"
+            slackSend color: 'good', message: "finish on ${HOSTNAME}: success: ${JOB_NAME}-${DPKG_ARCH}"
         }
         failure {
-            slackSend color: 'danger', message: "finish on ${HOSTNAME}: failure: finished ${JOB_NAME}"
+            slackSend color: 'danger', message: "finish on ${HOSTNAME}: failure: finished ${JOB_NAME}-${DPKG_ARCH}"
         }
     }
 }
