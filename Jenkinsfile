@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                slackSend color: 'good', message: "start ${JOB_NAME}-${DPKG_ARCH} on ${HOSTNAME}: https://github.com/michaeldallen/m2c-jenkins/commit/${GIT_COMMIT}"
+                slackSend color: 'good', message: "start ${JOB_NAME} on ${HOSTNAME}: https://github.com/michaeldallen/m2c-jenkins/commit/${GIT_COMMIT}"
             }
         }
         stage('sanity-check') {
@@ -42,10 +42,10 @@ pipeline {
     }
     post {
         success {
-            slackSend color: 'good', message: "finish on ${HOSTNAME}: success: ${JOB_NAME}-${DPKG_ARCH}"
+            slackSend color: 'good', message: "finish on ${HOSTNAME}: success: ${JOB_NAME}"
         }
         failure {
-            slackSend color: 'danger', message: "finish on ${HOSTNAME}: failure: finished ${JOB_NAME}-${DPKG_ARCH}"
+            slackSend color: 'danger', message: "finish on ${HOSTNAME}: failure: finished ${JOB_NAME}"
         }
     }
 }
