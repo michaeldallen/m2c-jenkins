@@ -2,7 +2,8 @@ FROM ubuntu:bionic
 RUN apt-get update && apt-get -y dist-upgrade
 RUN apt-get install --assume-yes \
   make \
-  bsdmainutils curl
+  bsdmainutils \
+  curl
 
 
 RUN curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
