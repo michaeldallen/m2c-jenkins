@@ -13,8 +13,7 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                slackSend color: 'good', message: "start on ${HOSTNAME}: michaeldallen/m2c-jenkins-${DPKG_ARCH}"
-                slackSend color: 'good', message: "start ${JOB_NAME} on ${HOSTNAME}: https://github.com/michaeldallen/m2c-jenkins/commit/${GIT_COMMIT}"
+                slackSend color: 'good', message: "start ${JOB_NAME}-${DPKG_ARCH} on ${HOSTNAME}: https://github.com/michaeldallen/m2c-jenkins/commit/${GIT_COMMIT}"
             }
         }
         stage('sanity-check') {
@@ -35,6 +34,8 @@ pipeline {
         stage('publish') {
             steps {
                 sh 'docker tag m2c-jenkins-${DPKG_ARCH} michaeldallen/m2c-jenkins-${DPKG_ARCH}'
+                                sh 'env | sort'
+
                 withDockerRegistry([ credentialsId: "michaeldallen-at-dockerhub", url: "" ]) {
                     sh 'docker push michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 }
