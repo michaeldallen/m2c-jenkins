@@ -34,9 +34,6 @@ pipeline {
         stage('publish') {
             steps {
                 sh 'docker tag m2c-jenkins-${DPKG_ARCH} michaeldallen/m2c-jenkins-${DPKG_ARCH}'
-                sh 'env | sort'
-                sh 'echo REGISTRYCREDENTIALS_USR: ${REGISTRYCREDENTIALS_USR} && sleep 60'
-
                 withDockerRegistry([ credentialsId: "michaeldallen-at-dockerhub", url: "" ]) {
                     sh 'docker push michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 }
