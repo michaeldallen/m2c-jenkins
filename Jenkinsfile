@@ -35,8 +35,6 @@ pipeline {
             steps {
                 sh 'docker tag m2c-jenkins-${DPKG_ARCH} michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 withDockerRegistry([ credentialsId: "michaeldallen-at-dockerhub", url: "" ]) {
-                                    sh 'env | sort'
-
                     sh 'docker push michaeldallen/m2c-jenkins-${DPKG_ARCH}'
                 }
             }
